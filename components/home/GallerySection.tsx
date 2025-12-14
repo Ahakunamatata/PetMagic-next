@@ -26,7 +26,7 @@ export default function GallerySection() {
   ];
 
   return (
-    <section id="gallery" className="relative py-24 px-4 bg-gradient-to-b from-orange-50/30 to-white">
+    <section id="gallery" className="relative py-16 px-4 bg-gradient-to-b from-orange-50/30 to-white">
       <div className="container mx-auto">
         {/* 标题区域 */}
         <div className="text-center mb-16">

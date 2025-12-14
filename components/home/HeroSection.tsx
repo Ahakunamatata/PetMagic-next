@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 
 export default function HeroSection() {
   const t = useTranslations('home');
-  const tCommon = useTranslations('common');
 
   return (
     <section className="relative py-24 md:py-32 px-4 overflow-hidden">
@@ -41,27 +40,11 @@ export default function HeroSection() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-lg px-10 py-7 rounded-2xl font-bold border-2 border-teal-500 text-teal-600 hover:bg-teal-50 hover:border-teal-600 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+              className="text-lg px-10 py-7 rounded-2xl font-bold border-2 border-teal-500 text-teal-600 hover:bg-teal-50 hover:border-teal-600 hover:text-teal-700 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
             >
               🎬 {t('ctaSecondary')}
             </Button>
           </Link>
-        </div>
-
-        {/* 信任标记 */}
-        <div className="flex flex-wrap gap-8 justify-center text-base text-gray-600 animate-fade-up" style={{ animationDelay: '0.3s' }}>
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
-            <span className="text-2xl">✓</span>
-            <span className="font-medium">{t('trust.noCard')}</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
-            <span className="text-2xl">✓</span>
-            <span className="font-medium">{t('trust.freeTries')}</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md">
-            <span className="text-2xl">⚡</span>
-            <span className="font-medium">{tCommon('fastGeneration')}</span>
-          </div>
         </div>
       </div>
     </section>
