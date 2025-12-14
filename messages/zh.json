@@ -170,15 +170,10 @@
     },
     "style": {
       "title": "选择风格",
-      "baby": "幼年版",
-      "cartoon": "卡通风格",
-      "police": "警察",
-      "teacher": "老师",
-      "gangster": "黑帮老大",
       "superhero": "超级英雄",
       "anime": "吉卜力/治愈动漫",
       "cyberpunk": "赛博朋克",
-      "pixel-art": "像素艺术",
+      "disney": "迪士尼",
       "custom": "自定义"
     },
     "prompt": {

@@ -8,19 +8,19 @@ export default function FeaturesSection() {
 
   const features = [
     {
-      icon: '🎨',
+      icon: '🐾',
       title: t('features.styles.title'),
       description: t('features.styles.description'),
       gradient: 'from-orange-500 to-orange-600',
     },
     {
-      icon: '⏰',
+      icon: '🦴',
       title: t('features.age.title'),
       description: t('features.age.description'),
       gradient: 'from-teal-500 to-teal-600',
     },
     {
-      icon: '🎭',
+      icon: '🐶',
       title: t('features.characters.title'),
       description: t('features.characters.description'),
       gradient: 'from-orange-400 to-teal-500',

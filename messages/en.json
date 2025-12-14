@@ -170,15 +170,10 @@
     },
     "style": {
       "title": "Choose a Style",
-      "baby": "Baby Version",
-      "cartoon": "Cartoon Style",
-      "police": "Police Officer",
-      "teacher": "Teacher",
-      "gangster": "Gangster Boss",
       "superhero": "Superhero",
       "anime": "Healing Anime",
       "cyberpunk": "Cyberpunk",
-      "pixel-art": "Pixel Art",
+      "disney": "Disney",
       "custom": "Custom"
     },
     "prompt": {

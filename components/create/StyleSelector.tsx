@@ -25,7 +25,6 @@ export default function StyleSelector() {
             onClick={() => setSelectedStyle(style.value)}
           >
             <CardContent className="p-3 flex items-center gap-3">
-              <div className="text-2xl">{style.icon}</div>
               <p className="text-sm font-medium">{t(style.value)}</p>
             </CardContent>
           </Card>

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import useAppStore from '@/lib/store/useAppStore';
 import { CREDIT_COSTS } from '@/lib/constants/credits';
+import { StylePreset } from '@/types/api';
 
 interface GenerateButtonProps {
   type: 'image' | 'video';
@@ -22,6 +23,7 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
   const credits = useAppStore((state) => state.credits);
   const uploadedImage = useAppStore((state) => state.uploadedImage);
   const selectedStyle = useAppStore((state) => state.selectedStyle);
+  const selectedExample = useAppStore((state) => state.selectedExample);
   const prompt = useAppStore((state) => state.prompt);
   const videoDuration = useAppStore((state) => state.videoDuration);
   const deductCredits = useAppStore((state) => state.deductCredits);
@@ -33,7 +35,7 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
 
   const handleGenerate = async () => {
     // Validation
-    if (!uploadedImage) {
+    if (!uploadedImage && !selectedExample) {
       toast({
         title: t('errors.uploadFailed'),
         description: 'Please upload a pet photo first',
@@ -48,6 +50,60 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
         description: 'Please select a style',
         variant: 'destructive',
       });
+      return;
+    }
+
+    if (selectedStyle === 'custom' && !prompt.trim()) {
+      toast({
+        title: t('common.error'),
+        description: 'Please describe the scene for Custom style',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Example mode: bypass credits + upload + API, directly show local results
+    // Only trigger when user DID NOT upload a file (so upload flow won't be hijacked by stale selectedExample)
+    if (!uploadedImage && selectedExample) {
+      const result = getExampleResultAsset(selectedExample, selectedStyle, type);
+      if (!result) {
+        toast({
+          title: t('common.error'),
+          description: `No local asset for example ${selectedExample} / style ${selectedStyle} / ${type}`,
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      setIsLoading(true);
+      setProgress(100);
+
+      if (type === 'image') {
+        addGeneratedImage({
+          id: `${Date.now()}-${Math.random()}`,
+          url: result,
+          style: selectedStyle,
+          prompt: selectedStyle === 'custom' ? prompt : undefined,
+          createdAt: new Date(),
+        });
+      } else {
+        addGeneratedVideo({
+          id: `${Date.now()}-${Math.random()}`,
+          url: result,
+          style: selectedStyle,
+          prompt: selectedStyle === 'custom' ? prompt : undefined,
+          duration: videoDuration,
+          createdAt: new Date(),
+        });
+      }
+
+      toast({
+        title: t('create.generate.complete'),
+        description: `Loaded example ${type} result`,
+      });
+
+      setIsLoading(false);
+      setProgress(0);
       return;
     }
 
@@ -248,7 +304,13 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
   return (
     <Button
       onClick={handleGenerate}
-      disabled={isLoading || !hasEnoughCredits || !uploadedImage || !selectedStyle}
+      disabled={
+        isLoading ||
+        !hasEnoughCredits ||
+        (!uploadedImage && !selectedExample) ||
+        !selectedStyle ||
+        (selectedStyle === 'custom' && !prompt.trim())
+      }
       size="lg"
       className="w-full"
     >
@@ -264,4 +326,34 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
       )}
     </Button>
   );
+}
+
+function getExampleResultAsset(
+  example: 'A' | 'B' | 'C',
+  style: StylePreset,
+  type: 'image' | 'video'
+): string | null {
+  // Local aipetlive naming notes:
+  // - superhero -> "super"
+  // - anime -> "jipuli"
+  // - cyberpunk -> "sbpk"
+  // - disney -> "disney"
+  const styleKeyMap: Record<string, string> = {
+    superhero: 'super',
+    anime: 'jipuli',
+    cyberpunk: 'sbpk',
+    disney: 'disney',
+  };
+
+  // Custom has no built-in local result
+  if (style === 'custom') return null;
+
+  const key = styleKeyMap[style];
+  if (!key) return null;
+
+  if (type === 'video') {
+    return `/aipetlive/${example}_video_${key}.mp4`;
+  }
+
+  return `/aipetlive/${example}_image_${key}.png`;
 }

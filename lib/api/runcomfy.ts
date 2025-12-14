@@ -283,12 +283,15 @@ export async function pollUntilComplete(
  * 根据风格构建提示词
  */
 function buildPromptForStyle(style: string, additionalPrompt?: string): string {
+  if (style === 'custom') {
+    return additionalPrompt?.trim() || '';
+  }
+
   const stylePrompts: Record<string, string> = {
     'superhero': 'Dressed as a superhero with costume and cape, powerful heroic pose, dynamic action stance',
     'anime': 'Transform into healing anime style, Studio Ghibli inspired, warm and peaceful atmosphere, soft colors and gentle expressions',
     'cyberpunk': 'Transform into cyberpunk style, neon lights, futuristic cityscape, high-tech aesthetic with glowing elements',
-    'pixel-art': 'Transform into pixel art style, retro gaming aesthetic, 8-bit or 16-bit graphics with vibrant colors',
-    'custom': 'High quality artistic transformation with creative interpretation',
+    'disney': 'Transform into classic Disney animation style, bright and vibrant colors, expressive eyes, clean line art, heartwarming magical atmosphere',
   };
 
   const stylePrompt = stylePrompts[style] || style;

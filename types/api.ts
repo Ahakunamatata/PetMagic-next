@@ -54,7 +54,7 @@ export type StylePreset =
   | 'superhero'
   | 'anime'
   | 'cyberpunk'
-  | 'pixel-art'
+  | 'disney'
   | 'custom';
 
 export interface PromptTag {

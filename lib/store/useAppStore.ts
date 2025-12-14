@@ -24,6 +24,7 @@ const useAppStore = create<AppStore>()(
   // Generation State
   uploadedImage: null,
   uploadedImagePreview: null,
+  selectedExample: null,
   selectedStyle: null,
   prompt: '',
   videoDuration: 3,
@@ -54,6 +55,7 @@ const useAppStore = create<AppStore>()(
       credits: INITIAL_CREDITS,
       uploadedImage: null,
       uploadedImagePreview: null,
+      selectedExample: null,
       selectedStyle: null,
       prompt: '',
       generatedImages: [],
@@ -79,6 +81,8 @@ const useAppStore = create<AppStore>()(
   // Generation Actions
   setUploadedImage: (file: File | null) => {
     if (file) {
+      // Selecting a real upload clears any example selection
+      set({ selectedExample: null });
       const reader = new FileReader();
       reader.onloadend = () => {
         set({
@@ -95,7 +99,31 @@ const useAppStore = create<AppStore>()(
     }
   },
 
+  setSelectedExample: (example: 'A' | 'B' | 'C' | null) => {
+    const previewMap: Record<'A' | 'B' | 'C', string> = {
+      A: '/aipetlive/A.JPG',
+      B: '/aipetlive/B.png',
+      C: '/aipetlive/C.png',
+    };
+
+    if (!example) {
+      set({ selectedExample: null });
+      return;
+    }
+
+    set({
+      selectedExample: example,
+      uploadedImage: null,
+      uploadedImagePreview: previewMap[example],
+    });
+  },
+
   setSelectedStyle: (style: StylePreset | null) => {
+    // Custom has no local example-result mapping; clear example to avoid confusion
+    if (style === 'custom') {
+      set({ selectedStyle: style, selectedExample: null });
+      return;
+    }
     set({ selectedStyle: style });
   },
 

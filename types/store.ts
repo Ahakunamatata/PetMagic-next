@@ -19,6 +19,7 @@ export interface AppStore {
   // Generation State
   uploadedImage: File | null;
   uploadedImagePreview: string | null;
+  selectedExample: 'A' | 'B' | 'C' | null;
   selectedStyle: StylePreset | null;
   prompt: string;
   videoDuration: number; // 3-10 seconds
@@ -37,6 +38,7 @@ export interface AppStore {
 
   // Generation Actions
   setUploadedImage: (file: File | null) => void;
+  setSelectedExample: (example: 'A' | 'B' | 'C' | null) => void;
   setSelectedStyle: (style: StylePreset | null) => void;
   setPrompt: (prompt: string) => void;
   setVideoDuration: (duration: number) => void;

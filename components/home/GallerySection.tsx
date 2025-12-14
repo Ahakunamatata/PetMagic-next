@@ -6,13 +6,16 @@ import Image from 'next/image';
 export default function GallerySection() {
   const t = useTranslations('home');
 
-  const examples = [
-    { id: 1, title: t('gallery.examples.1.title'), seed: 1, badge: t('gallery.examples.1.badge') },
-    { id: 2, title: t('gallery.examples.2.title'), seed: 2, badge: t('gallery.examples.2.badge') },
-    { id: 3, title: t('gallery.examples.3.title'), seed: 3, badge: t('gallery.examples.3.badge') },
-    { id: 4, title: t('gallery.examples.4.title'), seed: 4, badge: t('gallery.examples.4.badge') },
-    { id: 5, title: t('gallery.examples.5.title'), seed: 5, badge: t('gallery.examples.5.badge') },
-    { id: 6, title: t('gallery.examples.6.title'), seed: 6, badge: t('gallery.examples.6.badge') },
+  const examples: Array<
+    | { id: number; type: 'image'; src: string }
+    | { id: number; type: 'video'; src: string }
+  > = [
+    { id: 1, type: 'video', src: '/aipetlive/B_video_sbpk.mp4' },
+    { id: 2, type: 'video', src: '/aipetlive/B_video_super.mp4' },
+    { id: 3, type: 'video', src: '/aipetlive/C_video_sbpk.mp4' },
+    { id: 4, type: 'video', src: '/aipetlive/C_video_disney.mp4' },
+    { id: 5, type: 'video', src: '/aipetlive/A_video_sbpk.mp4' },
+    { id: 6, type: 'video', src: '/aipetlive/A_video_jipuli.mp4' },
   ];
 
   const tags = [
@@ -48,34 +51,26 @@ export default function GallerySection() {
                 animationDelay: `${index * 0.1}s`,
               }}
             >
-              {/* 图片 */}
-              <Image
-                src={`https://picsum.photos/seed/${example.seed}/600/600`}
-                alt={example.title}
-                fill
-                className="object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              
-              {/* 渐变遮罩 */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
-              
-              {/* 徽章 */}
-              <div className="absolute top-4 right-4">
-                <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-800 shadow-lg">
-                  {example.badge}
-                </span>
-              </div>
-              
-              {/* 标题 */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                <p className="text-white font-heading text-2xl font-bold drop-shadow-lg">
-                  {example.title}
-                </p>
-                <div className="mt-2 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-white/90 text-sm">{t('gallery.viewDetails')}</span>
-                  <span className="text-white">→</span>
-                </div>
-              </div>
+              {example.type === 'image' ? (
+                <Image
+                  src={example.src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  priority={index < 2}
+                />
+              ) : (
+                <video
+                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  src={example.src}
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  preload="metadata"
+                />
+              )}
             </div>
           ))}
         </div>
