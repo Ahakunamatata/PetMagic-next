@@ -23,8 +23,8 @@ export default function HomePage() {
       <Header />
       <main className="overflow-hidden">
         <HeroSection />
-        <FeaturesSection />
         <GallerySection />
+        <FeaturesSection />
         <FAQSection />
         <CTASection />
       </main>

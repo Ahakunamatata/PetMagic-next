@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import LoginForm from '@/components/auth/LoginForm';
 
 export const metadata: Metadata = {
-  title: 'Login - PetMagic AI',
-  description: 'Login to PetMagic AI to start creating magical pet transformations',
+  title: 'Login - AIPetLive',
+  description: 'Login to AIPetLive to start creating magical pet transformations',
 };
 
 export default function LoginPage() {
@@ -12,7 +12,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            🐾 PetMagic AI
+            🐾 AIPetLive
           </h1>
         </div>
         <LoginForm />

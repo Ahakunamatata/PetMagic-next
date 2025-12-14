@@ -12,10 +12,10 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: "PetMagic AI - Transform Pet Photos into AI Art & Videos",
+  title: "AIPetLive - Transform Pet Photos into AI Art & Videos",
   description: "Turn your pet photos into amazing AI-generated images and videos. Create cartoon pets, baby versions, or funny characters in seconds.",
   keywords: "AI pet generator, pet photo transformation, AI pet images, AI pet videos, cartoon pet, pet art",
-  authors: [{ name: "PetMagic AI" }],
+  authors: [{ name: "AIPetLive" }],
   viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
 };

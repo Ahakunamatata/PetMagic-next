@@ -227,15 +227,15 @@
   },
   "meta": {
     "home": {
-      "title": "PetMagic AI - 将宠物照片变成AI艺术和视频 | 免费宠物图片生成器",
+      "title": "AIPetLive - 将宠物照片变成AI艺术和视频 | 免费宠物图片生成器",
       "description": "将宠物照片变成惊人的AI生成图片和视频。几秒钟创建卡通宠物、幼年版本或有趣角色。免费试用！"
     },
     "imageGenerator": {
-      "title": "AI宠物图片生成器 - 创建卡通和风格化宠物照片 | PetMagic AI",
+      "title": "AI宠物图片生成器 - 创建卡通和风格化宠物照片 | AIPetLive",
       "description": "从照片生成精美的AI宠物图片。将狗和猫变成卡通、幼年版本或有趣角色。"
     },
     "videoAnimator": {
-      "title": "AI宠物视频动画器 - 让宠物照片动起来 | PetMagic AI",
+      "title": "AI宠物视频动画器 - 让宠物照片动起来 | AIPetLive",
       "description": "用AI动画化宠物照片。创建3-10秒的宠物视频，不同风格和动作。"
     }
   }
