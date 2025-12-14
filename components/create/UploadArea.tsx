@@ -20,6 +20,7 @@ export default function UploadArea() {
   const { toast } = useToast();
   const uploadedImagePreview = useAppStore((state) => state.uploadedImagePreview);
   const selectedExample = useAppStore((state) => state.selectedExample);
+  const selectedStyle = useAppStore((state) => state.selectedStyle);
   const setUploadedImage = useAppStore((state) => state.setUploadedImage);
   const setSelectedExample = useAppStore((state) => state.setSelectedExample);
 
@@ -133,6 +134,9 @@ export default function UploadArea() {
                       e.stopPropagation();
                       handleExampleClick(item.id);
                     }}
+                    aria-pressed={isSelected}
+                    data-selected={isSelected ? 'true' : 'false'}
+                    data-style={selectedStyle ?? ''}
                   >
                     <Image
                       src={item.src}

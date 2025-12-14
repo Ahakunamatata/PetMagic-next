@@ -29,6 +29,7 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
   const deductCredits = useAppStore((state) => state.deductCredits);
   const addGeneratedImage = useAppStore((state) => state.addGeneratedImage);
   const addGeneratedVideo = useAppStore((state) => state.addGeneratedVideo);
+  const setIsGenerating = useAppStore((state) => state.setIsGenerating);
 
   const cost = CREDIT_COSTS[type];
   const hasEnoughCredits = credits >= cost;
@@ -75,7 +76,8 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
         return;
       }
 
-      setIsLoading(true);
+  setIsLoading(true);
+  setIsGenerating(true);
       setProgress(100);
 
       if (type === 'image') {
@@ -103,6 +105,7 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
       });
 
       setIsLoading(false);
+      setIsGenerating(false);
       setProgress(0);
       return;
     }
@@ -126,6 +129,7 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
     }
 
     setIsLoading(true);
+  setIsGenerating(true);
     setProgress(0);
 
     try {
@@ -150,6 +154,7 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
       useAppStore.setState({ credits: currentCredits + cost });
     } finally {
       setIsLoading(false);
+      setIsGenerating(false);
       setProgress(0);
     }
   };

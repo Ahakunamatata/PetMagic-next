@@ -60,6 +60,7 @@ const useAppStore = create<AppStore>()(
       prompt: '',
       generatedImages: [],
       generatedVideos: [],
+      isGenerating: false,
     });
   },
 
@@ -119,11 +120,6 @@ const useAppStore = create<AppStore>()(
   },
 
   setSelectedStyle: (style: StylePreset | null) => {
-    // Custom has no local example-result mapping; clear example to avoid confusion
-    if (style === 'custom') {
-      set({ selectedStyle: style, selectedExample: null });
-      return;
-    }
     set({ selectedStyle: style });
   },
 
@@ -158,6 +154,7 @@ const useAppStore = create<AppStore>()(
     set({
       generatedImages: [],
       generatedVideos: [],
+      isGenerating: false,
     });
   },
 
