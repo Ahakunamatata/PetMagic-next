@@ -79,6 +79,41 @@
     "galleryTitle": "Created by Pet Lovers Like You",
     "gallerySubtitle": "See the amazing creations from other pet owners",
     "galleryMore": "More amazing styles waiting for you to explore",
+    "gallery": {
+      "examples": {
+        "1": {
+          "title": "Golden Retriever Pup 🐕",
+          "badge": "Cute Style"
+        },
+        "2": {
+          "title": "Police Cat 👮",
+          "badge": "Profession Series"
+        },
+        "3": {
+          "title": "Anime Shiba 🎨",
+          "badge": "Anime"
+        },
+        "4": {
+          "title": "Professor Poodle 🎓",
+          "badge": "Profession Series"
+        },
+        "5": {
+          "title": "Gang Bulldog 😎",
+          "badge": "Cool Style"
+        },
+        "6": {
+          "title": "Superhero Corgi 🦸",
+          "badge": "Superhero"
+        }
+      },
+      "viewDetails": "View details",
+      "tags": {
+        "artStyles": "🎨 Art Styles",
+        "dreamSeries": "🌟 Dream Series",
+        "rolePlay": "🎭 Role Play",
+        "awardWinning": "🏆 Award-winning"
+      }
+    },
     "faq": {
       "title": "Frequently Asked Questions",
       "subtitle": "Quick answers to help you understand our service",

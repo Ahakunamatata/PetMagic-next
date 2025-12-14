@@ -7,12 +7,19 @@ export default function GallerySection() {
   const t = useTranslations('home');
 
   const examples = [
-    { id: 1, title: '宝宝金毛 🐕', seed: 1, badge: '可爱风格' },
-    { id: 2, title: '警官猫咪 👮', seed: 2, badge: '职业系列' },
-    { id: 3, title: '动漫柴犬 🎨', seed: 3, badge: '二次元' },
-    { id: 4, title: '教授贵宾犬 🎓', seed: 4, badge: '职业系列' },
-    { id: 5, title: '帮派斗牛犬 😎', seed: 5, badge: '酷炫风格' },
-    { id: 6, title: '超级英雄柯基 🦸', seed: 6, badge: '超级英雄' },
+    { id: 1, title: t('gallery.examples.1.title'), seed: 1, badge: t('gallery.examples.1.badge') },
+    { id: 2, title: t('gallery.examples.2.title'), seed: 2, badge: t('gallery.examples.2.badge') },
+    { id: 3, title: t('gallery.examples.3.title'), seed: 3, badge: t('gallery.examples.3.badge') },
+    { id: 4, title: t('gallery.examples.4.title'), seed: 4, badge: t('gallery.examples.4.badge') },
+    { id: 5, title: t('gallery.examples.5.title'), seed: 5, badge: t('gallery.examples.5.badge') },
+    { id: 6, title: t('gallery.examples.6.title'), seed: 6, badge: t('gallery.examples.6.badge') },
+  ];
+
+  const tags = [
+    t('gallery.tags.artStyles'),
+    t('gallery.tags.dreamSeries'),
+    t('gallery.tags.rolePlay'),
+    t('gallery.tags.awardWinning'),
   ];
 
   return (
@@ -65,7 +72,7 @@ export default function GallerySection() {
                   {example.title}
                 </p>
                 <div className="mt-2 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-white/90 text-sm">查看详情</span>
+                  <span className="text-white/90 text-sm">{t('gallery.viewDetails')}</span>
                   <span className="text-white">→</span>
                 </div>
               </div>
@@ -79,7 +86,7 @@ export default function GallerySection() {
             {t('galleryMore')}
           </p>
           <div className="inline-flex gap-3">
-            {['🎨 艺术风格', '🌟 梦幻系列', '🎭 角色扮演', '🏆 获奖作品'].map((tag, i) => (
+            {tags.map((tag, i) => (
               <span 
                 key={i}
                 className="px-5 py-2 bg-gradient-to-r from-orange-100 to-teal-100 rounded-full text-sm font-semibold text-gray-700 hover:shadow-lg transition-shadow duration-200"
