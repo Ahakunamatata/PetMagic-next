@@ -34,6 +34,25 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
   const cost = CREDIT_COSTS[type];
   const hasEnoughCredits = credits >= cost;
 
+  const getExampleSourceUrl = (example: 'A' | 'B' | 'C'): string => {
+    const map: Record<'A' | 'B' | 'C', string> = {
+      A: '/aipetlive/A.JPG',
+      B: '/aipetlive/B.png',
+      C: '/aipetlive/C.png',
+    };
+    return map[example];
+  };
+
+  const urlToFile = async (url: string, filename: string): Promise<File> => {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`Failed to load example image: ${res.status}`);
+    }
+    const blob = await res.blob();
+    const type = blob.type || 'image/jpeg';
+    return new File([blob], filename, { type });
+  };
+
   const handleGenerate = async () => {
     // Validation
     if (!uploadedImage && !selectedExample) {
@@ -63,9 +82,10 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
       return;
     }
 
-    // Example mode: bypass credits + upload + API, directly show local results
-    // Only trigger when user DID NOT upload a file (so upload flow won't be hijacked by stale selectedExample)
-    if (!uploadedImage && selectedExample) {
+    // Example mode behavior:
+    // - For preset styles (non-custom): keep fast local preview asset (no credits, no API)
+    // - For custom style: run real generation using the selected example image as input
+    if (!uploadedImage && selectedExample && selectedStyle !== 'custom') {
       const result = getExampleResultAsset(selectedExample, selectedStyle, type);
       if (!result) {
         toast({
@@ -76,8 +96,8 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
         return;
       }
 
-  setIsLoading(true);
-  setIsGenerating(true);
+      setIsLoading(true);
+      setIsGenerating(true);
       setProgress(100);
 
       if (type === 'image') {
@@ -85,7 +105,6 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
           id: `${Date.now()}-${Math.random()}`,
           url: result,
           style: selectedStyle,
-          prompt: selectedStyle === 'custom' ? prompt : undefined,
           createdAt: new Date(),
         });
       } else {
@@ -93,7 +112,6 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
           id: `${Date.now()}-${Math.random()}`,
           url: result,
           style: selectedStyle,
-          prompt: selectedStyle === 'custom' ? prompt : undefined,
           duration: videoDuration,
           createdAt: new Date(),
         });
@@ -161,7 +179,20 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
 
   // Real API generation using RunComfy
   const generateWithRunComfy = async () => {
-    if (!uploadedImage || !selectedStyle) return;
+    if (!selectedStyle) return;
+
+    // Resolve input image:
+    // - prefer uploadedImage
+    // - else if selectedExample: fetch it and convert to File
+    let inputImage: File | null = uploadedImage;
+    if (!inputImage && selectedExample) {
+      const url = getExampleSourceUrl(selectedExample);
+      inputImage = await urlToFile(url, `example-${selectedExample}.jpg`);
+    }
+
+    if (!inputImage) {
+      throw new Error('No input image found');
+    }
 
     toast({
       title: 'Starting generation...',
@@ -170,7 +201,7 @@ export default function GenerateButton({ type, onGenerate, useMockData = false }
 
     // Prepare form data
     const formData = new FormData();
-    formData.append('image', uploadedImage);
+    formData.append('image', inputImage);
     formData.append('style', selectedStyle);
     if (prompt) formData.append('prompt', prompt);
     if (type === 'video') {
